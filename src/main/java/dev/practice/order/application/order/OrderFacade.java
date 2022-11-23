@@ -16,6 +16,10 @@ public class OrderFacade {
     private final NotificationService notificationService;
 
     public String registerOrder(OrderCommand.RegisterOrder registerOrder) {
+        /*
+         * 해당 Facade 는 Transaction 으로 묶지 않는다 왜?
+         * registerOrder 와 sendKakao 메소드 각각 모두 정상동작하지 않더라도 서로의 영향은 없기때문.
+         * */
         var orderToken = orderService.registerOrder(registerOrder);
         notificationService.sendKakao("ORDER_COMPLETE", "content");
         return orderToken;
