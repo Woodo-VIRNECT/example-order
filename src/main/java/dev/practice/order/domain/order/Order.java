@@ -35,6 +35,7 @@ public class Order extends AbstractEntity {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "order", cascade = CascadeType.PERSIST)
     private List<OrderItem> orderItemList = Lists.newArrayList();
 
+    // 반드시 필수적으로 필요한 배송정보 속성(DeliveryFragment) 관련해서는 @Embedded 어노테이션을 주로 활용한다.
     @Embedded
     private DeliveryFragment deliveryFragment;
 
@@ -57,9 +58,9 @@ public class Order extends AbstractEntity {
 
     @Builder
     public Order(
-            Long userId,
-            String payMethod,
-            DeliveryFragment deliveryFragment
+        Long userId,
+        String payMethod,
+        DeliveryFragment deliveryFragment
     ) {
         if (userId == null) throw new InvalidParamException("Order.userId");
         if (StringUtils.isEmpty(payMethod)) throw new InvalidParamException("Order.payMethod");
@@ -79,8 +80,8 @@ public class Order extends AbstractEntity {
      */
     public Long calculateTotalAmount() {
         return orderItemList.stream()
-                .mapToLong(OrderItem::calculateTotalAmount)
-                .sum();
+            .mapToLong(OrderItem::calculateTotalAmount)
+            .sum();
     }
 
     public void orderComplete() {
