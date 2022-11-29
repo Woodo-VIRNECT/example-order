@@ -36,6 +36,5 @@ public class OrderApiController {
         var paymentCommand = orderDtoMapper.of(paymentRequest);
         orderFacade.paymentOrder(paymentCommand);
         return CommonResponse.success("OK");
-
     }
 }
